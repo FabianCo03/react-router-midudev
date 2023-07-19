@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { EVENTS } from "./consts";
 
 const NAVIGATION_EVENT = "pushstate";
 
 function navigate(href) {
   window.history.pushState({}, "", href);
   // evento personalizado
-  const navigationEvent = new Event(NAVIGATION_EVENT);
+  const navigationEvent = new Event(EVENTS.PUSHSTATE);
   window.dispatchEvent(navigationEvent);
 }
 
@@ -15,7 +16,9 @@ function HomePage() {
     <>
       <h1>Estás en Home</h1>
       <p>Página de ejemplo para react router</p>
-      <button onClick={() => navigate('/about')} href="/about">Sobre mí</button>
+      <button onClick={() => navigate("/about")} href="/about">
+        Sobre mí
+      </button>
     </>
   );
 }
@@ -31,7 +34,9 @@ function AboutPage() {
           alt="Foto perfil Twitter FabianCo03"
         />
       </div>
-      <button onClick={() => navigate('/')} href="/">Ir al Home</button>
+      <button onClick={() => navigate("/")} href="/">
+        Ir al Home
+      </button>
     </>
   );
 }
@@ -41,16 +46,17 @@ function App() {
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname)
-    }
-    
-    window.addEventListener(NAVIGATION_EVENT, onLocationChange)
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange);
+    window.addEventListener(EVENTS.POPSTATE, onLocationChange);
 
     return () => {
-      window.removeEventListener(NAVIGATION_EVENT, onLocationChange)
-    }
-
-  }, [])
+      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange);
+      window.removeEventListener(EVENTS.POPSTATE, onLocationChange);
+    };
+  }, []);
 
   return (
     <>
