@@ -17,9 +17,8 @@ export function Link({ target, to, ...props }) {
     if (isMainEvent && isManageableEvent && !isModifiedEvent) {
       event.preventDefault();
       navigate(to); // navegación con SPA
-      window.scrollTo(0, 0);
     }
   };
-  console.log({ ...props }); // children: 'ir a home' || 'ir a sobre mi'
+  // console.log({ ...props }); // children: 'ir a home' || 'ir a sobre mi'
   return <a onClick={handleClick} href={to} target={target} {...props}></a>;
 }

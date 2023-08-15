@@ -1,40 +1,39 @@
-import { Link } from "../Link";
-import "../styles/About.css";
+import ButtonsSocialMedia from "../components/ButtonsSocialMedia";
+export default function About() {
+  const socialMediaList = [
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/in/fabi%C3%A1n-camilo-orjuela-moncada-0742241b5/",
+      target: "_blank",
+      image: "https://cdn-icons-png.flaticon.com/512/49/49408.png",
+    },
+    {
+      name: "GitHub",
+      href: "https://github.com/FabianCo03",
+      target: "_blank",
+      image: "https://cdn-icons-png.flaticon.com/512/25/25231.png",
+    },
+    {
+      name: "Twitter",
+      href: "https://twitter.com/FabianCo03",
+      target: "_blank",
+      image:
+        "https://cdn3.iconfinder.com/data/icons/picons-social/57/43-twitter-512.png",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/fabianco03/",
+      target: "_blank",
+      image: "https://cdn-icons-png.flaticon.com/512/1384/1384015.png",
+    },
+  ];
 
-export default function AboutPage() {
   return (
-    <>
-      <h1>Me</h1>
-      <img
-        src="https://pbs.twimg.com/profile_images/1424599144627380226/Ty7fEdbn_400x400.jpg"
-        alt="Foto perfil Fabián"
-      />
-      <p>Hola! me llamo Fabián y estoy creando mi primer React Router</p>
-      <br />
-      <Link to="/">Ir a Home</Link>
-
-      <section className="buttons-social-network">
-        <a
-          href="https://www.linkedin.com/in/fabi%C3%A1n-camilo-orjuela-moncada-0742241b5/"
-          className="fa fa-linkedin"
-          target="_blank"
-        ></a>
-        <a
-          href="https://github.com/FabianCo03"
-          className="fa fa-github"
-          target="_blank"
-        ></a>
-        <a
-          href="https://twitter.com/FabianCo03"
-          className="fa fa-twitter"
-          target="_blank"
-        ></a>
-        <a
-          href="https://www.instagram.com/fabianco03/"
-          className="fa fa-instagram"
-          target="_blank"
-        ></a>
-      </section>
-    </>
+    <div className="top-0 right-0 w-92 text-center h-screen p-4 bg-gray-600 text-gray-50">
+      <h1 className="text-3xl">Me</h1>
+      <footer>
+        <ButtonsSocialMedia socialMediaList={socialMediaList} />
+      </footer>
+    </div>
   );
 }
