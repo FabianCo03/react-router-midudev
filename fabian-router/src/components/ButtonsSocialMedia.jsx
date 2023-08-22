@@ -9,7 +9,7 @@ const ButtonsSocialMedia = ({ socialMediaList }) => {
             href={socialMedia.href}
             target={socialMedia.target}
             rel="noopener noreferrer"
-            className="mr-6 p-2 rounded-full text-gray-200 hover:bg-gray-50 hover:text-black transition-transform duration-300 hover:scale-110 border border-gray-500 hover:border-gray-900"
+            className="mr-6 p-2 rounded-full text-gray-200 hover:bg-gray-100 hover:text-black transition-transform duration-300 hover:scale-110 border border-gray-500 hover:border-gray-100"
           >
             {socialMedia.name}
           </a>
