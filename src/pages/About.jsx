@@ -8,7 +8,7 @@ export default function About() {
     <>
       <SideBar />
       <div className="top-0 right-0 w-92 text-center h-screen p-4 bg-gray-600 text-gray-50">
-        <h1 className="text-3xl">Sobre mí</h1>
+        <h1 className="text-3xl">Yo</h1>
         <footer>
           <ButtonsSocialMedia socialMediaList={socialMediaList} />
         </footer>
