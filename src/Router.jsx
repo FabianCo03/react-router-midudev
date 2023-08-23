@@ -1,20 +1,21 @@
-import { useState, useEffect, Children } from "react";
-import { EVENTS } from "./consts";
+import { EVENTS } from "./utils/consts.js";
+import { getCurrentPath } from "./utils/getCurrentPath.js";
 import { match } from "path-to-regexp";
+import { useState, useEffect, Children } from "react";
 
 export function Router({
   children,
   routes = [],
-  defaultComponent: DefaultComponent = () => <h1>PAGE NOT FOUND 404</h1>,
+  defaultComponent: DefaultComponent = () => <h1>404</h1>,
 }) {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname); // '/' '/about'
+  const [currentPath, setCurrentPath] = useState(getCurrentPath());
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname);
+      setCurrentPath(getCurrentPath());
     };
 
-    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange); // actualiza contenido nuevo
+    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange);
     window.addEventListener(EVENTS.POPSTATE, onLocationChange);
 
     return () => {
@@ -25,36 +26,37 @@ export function Router({
 
   let routeParams = {};
 
-  // add routes from children <Route/> components
+  // add routes from children <Route /> components
   const routesFromChildren = Children.map(children, ({ props, type }) => {
     const { name } = type;
     const isRoute = name === "Route";
-
     return isRoute ? props : null;
   });
 
-  const routesToUse = routes.concat(routesFromChildren);
+  const routesToUse = routes.concat(routesFromChildren).filter(Boolean);
 
   const Page = routesToUse.find(({ path }) => {
     if (path === currentPath) return true;
 
     // hemos usado path-to-regexp
     // para poder detectar rutas dinámicas como por ejemplo
-    // /search/:query <- query es una ruta dinámica
-    const matcheURL = match(path, { decode: decodeURIComponent });
-    const matched = matcheURL(currentPath);
-
+    // /search/:query <- :query es una ruta dinámica
+    const matcherUrl = match(path, { decode: decodeURIComponent });
+    const matched = matcherUrl(currentPath);
     if (!matched) return false;
 
-    // guardar los parámetros de la URL que eran dinámicos
-    // y que hemos extraido con path-to-regexp
+    // guardar los parámetros de la url que eran dinámicos
+    // y que hemos extraído con path-to-regexp
     // por ejemplo, si la ruta es /search/:query
-    // y la URL es /search/javascript
+    // y la url es /search/javascript
     // matched.params.query === 'javascript'
-    routeParams = matched.params; // { query: 'javascript` }
+    routeParams = matched.params;
     return true;
-    // ?. si el find devuelve 'null', no sigue evaluando lo de la derecha
   })?.Component;
 
-  return Page ? <Page routeParams={routeParams} /> : <DefaultComponent />;
+  return Page ? (
+    <Page routeParams={routeParams} />
+  ) : (
+    <DefaultComponent routeParams={routeParams} />
+  );
 }
