@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import Page404 from "./pages/404";
 import SearchPage from "./SearchPage";
 // Cargará el JS que necesitemos, es un impacto muy positivo
+//LazyLoad
 const LazyAbout = lazy(() => import("./pages/About.jsx")); // import dinámico
 const LazyMyProjects = lazy(() => import("./pages/MyProjects")); // import dinámico
 const LazyUniversity = lazy(() => import("./pages/University")); // import dinámico
